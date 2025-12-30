@@ -1,0 +1,27 @@
+# ---------- Core Backend ----------
+fastapi
+uvicorn
+pydantic
+python-dotenv
+
+# ---------- LLM (Gemini) ----------
+google-genai
+
+# ---------- Vector Search ----------
+faiss-cpu
+sentence-transformers
+numpy
+
+# ---------- Resume Parsing ----------
+pypdf
+
+# ---------- Text-to-Speech ----------
+elevenlabs
+
+# ---------- Frontend ----------
+streamlit
+requests
+
+
+python-multipart
+firebase-admin
