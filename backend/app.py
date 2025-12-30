@@ -35,6 +35,7 @@ async def upload(file: UploadFile = File(...)):
     with open(path, "wb") as f:
         shutil.copyfileobj(file.file, f)
     text = resume_service.load_pdf_text(path)
+    
     chunks = [text[i:i+1000] for i in range(0, len(text), 800)]
     global vector_index, doc_chunks
     vector_index, doc_chunks = faiss_store.build_store(chunks)

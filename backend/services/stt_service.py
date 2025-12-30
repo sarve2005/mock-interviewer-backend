@@ -2,7 +2,20 @@ from elevenlabs.client import ElevenLabs
 from backend.config import ELEVENLABS_API_KEY
 import io
 
-client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
+client = None
+
+def get_client():
+    global client
+    if not client:
+        if not ELEVENLABS_API_KEY:
+             print("Warning: ElevenLabs API Key not set.")
+             return None
+        try:
+            client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
+        except Exception as e:
+            print(f"Error initializing ElevenLabs client: {e}")
+            return None
+    return client
 
 def transcribe_audio(file_obj) -> str:
     """
@@ -27,7 +40,11 @@ def transcribe_audio(file_obj) -> str:
     # Let's verify what the SDK expects. It sends a multipart/form-data request.
     # We should probably pass it as a file-like with a 'name' attribute.
     
-    result = client.speech_to_text.convert(
+    c = get_client()
+    if not c:
+        return ""
+
+    result = c.speech_to_text.convert(
         file=io.BytesIO(content), # The SDK handles BytesIO, but we should inspect if it needs a name
         model_id="scribe_v1",
         tag_audio_events=False,
