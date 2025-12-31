@@ -9,9 +9,13 @@ def get_embedder():
     global embedder
     if embedder is None:
         print("Loading FastEmbed model...")
-        # BAAI/bge-small-en-v1.5 is a good default, or use "sentence-transformers/all-MiniLM-L6-v2"
-        # FastEmbed defaults to "BAAI/bge-small-en-v1.5"
-        embedder = TextEmbedding()
+        # Check for local cache first (Render build)
+        import os
+        cache_dir = os.path.join(os.getcwd(), "model_cache")
+        if not os.path.exists(cache_dir):
+            cache_dir = None # Use default
+            
+        embedder = TextEmbedding(cache_dir=cache_dir)
     return embedder
 
 def build_store(chunks):
