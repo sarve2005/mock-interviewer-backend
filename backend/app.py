@@ -4,6 +4,7 @@ from backend.services import resume_service, question_service, interview_service
 from backend.vectorstore import faiss_store
 from backend.models.schemas import *
 from pydantic import BaseModel
+from contextlib import asynccontextmanager
 
 class AnswerInput(BaseModel):
     session_id: str
@@ -12,7 +13,16 @@ class AnswerInput(BaseModel):
 
 import shutil, os
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Preload the generic embedding model to avoid first-request latency
+    print("Preloading FastEmbed model...")
+    # This might block, but it's acceptable during startup
+    await run_in_threadpool(faiss_store.get_embedder)
+    print("FastEmbed model loaded successfully.")
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 from fastapi.middleware.cors import CORSMiddleware
 
