@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, Response
 from fastapi.concurrency import run_in_threadpool
-from backend.services import resume_service, question_service, interview_service, feedback_service, tts_service, stt_service
+from backend.services import resume_service, question_service, interview_service, feedback_service
 from backend.vectorstore import faiss_store
 from backend.models.schemas import *
 from pydantic import BaseModel
@@ -102,22 +102,6 @@ async def tech_summary(d: QAInput):
 async def tech_flags(d: QAInput):
     flags = await run_in_threadpool(feedback_service.technical_flags, d.question, d.answer)
     return {"flags": flags}
-
-
-@app.post("/tts")
-async def tts_endpoint(d: TTSInput):
-    # Network call to ElevenLabs/GTTS
-    audio = await run_in_threadpool(tts_service.text_to_speech_bytes, d.text)
-    return Response(content=audio, media_type="audio/mpeg")
-
-
-@app.post("/stt")
-async def stt_endpoint(file: UploadFile = File(...)):
-    # UploadFile.file is a SpooledTemporaryFile which is file-like
-    # This might be tricky if stt_service expects a path or modifies the file pointer
-    # But generally assuming it reads from the file-like object
-    text = await run_in_threadpool(stt_service.transcribe_audio, file.file)
-    return {"text": text}
 
 
 @app.get("/session/{sid}")

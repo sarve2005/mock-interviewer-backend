@@ -11,7 +11,7 @@ numpy
 
 # ---------- LLM & APIs ----------
 google-genai
-elevenlabs
+
 
 # ---------- Utilities ----------
 pypdf
