@@ -31,7 +31,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:5173",
-        "https://mock-interviewer-frontend.vercel.app"
+        "https://mock-interviewer-frontend.vercel.app",
+        "https://mock-interviewer-77229.web.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
