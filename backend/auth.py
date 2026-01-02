@@ -6,7 +6,7 @@ security = HTTPBearer()
 
 async def verify_token(credentials: HTTPAuthorizationCredentials = Security(security)) -> str:
     """
-    Verifies the Firebase ID token and returns the user's UID.
+    Verifies the Firebase ID token and returns the user's UID..
     """
     token = credentials.credentials
     try:
