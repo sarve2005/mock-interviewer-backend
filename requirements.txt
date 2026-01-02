@@ -18,3 +18,4 @@ pypdf
 python-multipart
 firebase-admin
 requests
+groq

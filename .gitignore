@@ -7,3 +7,4 @@ uploads/
 *.json
 !requirements.txt
 !package.json
+serviceAccountKey.json

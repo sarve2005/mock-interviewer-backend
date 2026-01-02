@@ -12,3 +12,4 @@ GEMINI_QGEN_MODEL = "gemini-2.5-flash"
 GEMINI_FEEDBACK_MODEL = "gemini-2.5-flash-lite"
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")

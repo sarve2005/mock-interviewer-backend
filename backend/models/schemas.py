@@ -6,6 +6,7 @@ class StartInterview(BaseModel):
     num_questions: int = 6
 
 class QAInput(BaseModel):
+    session_id: str
     question: str
     answer: str
 
